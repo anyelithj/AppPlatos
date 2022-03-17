@@ -1,0 +1,10 @@
+.form-agregar{
+    width: 50%;
+    margin: 0 auto;
+}
+@media (max-width:450px){
+    .form-agregar{
+        width: 100%;
+        padding: 1rem;
+    }
+}

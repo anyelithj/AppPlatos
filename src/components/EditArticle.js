@@ -1,53 +1,54 @@
-import React, { useEffect, useState } from 'react'
-import useForm from '../hooks/useForm'
-import { Button} from 'react-bootstrap';
-import { Modal } from 'bootstrap';
-import { useDispatch } from 'react-redux';
-import { addAsyn, ListAsyn } from '../redux/actions/actionArticle';
-
-const EditArticle = () => {
-  const [state, reset] = useForm({
-    name: '',
-    shippingCost: '',
-    currency: '',
-    ingredients:[],
-  })
-  const [show, setShow] = useState(false);
-
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
-
-  const {nombre, codigo, descripcion, precio} = state
+import React from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import { editAsyn } from "../redux/actions/actionArticle";
+import "../Styled/EditArticle.css";
 
 
-  const handleSubmit = (e) => {
-    e.preventDefaul();
-    reset();
-}
+const EditArticle = ({ sendArt }) => {
+  const { ingredientIndex, articleIndex } = useParams();
+  console.log({ ingredientIndex, articleIndex });
+  const { article } = useSelector((store) => store.article);
+  const ingredient = article[articleIndex]?.ingredients[ingredientIndex];
+  const { brand, items, price, product, quantity } = ingredient;
+
+
+  const {
+    register,
+    handleSubmit,
+  } = useForm();
+
+  const dispatch = useDispatch();
+
+
+  const onSubmit = (ingredient) => {
+    dispatch(editAsyn({
+      article:article[articleIndex],
+      name:article[articleIndex]?.name,
+      ingredient,
+      ingredientIndex      
+    }))
+    window.history.back();    
+  };
 
   return (
-    <div style={{width: '30%', margin:' 5% 25%'}}>
-    <Button variant="primary" onClick={handleShow}>
-        Editar
-      </Button>
+    <div className="form-agregar">
+      <h1>Editar Información</h1>
+      <form className="form-container" onSubmit={handleSubmit(onSubmit)}>
+        <input defaultValue={brand} placeholder="brand" {...register("brand")} />
+        <input defaultValue={items} placeholder="items" {...register("items")} />
+        <input defaultValue={price} placeholder="price" {...register("price")} />
+        <input defaultValue={product} placeholder="product" {...register("product")} />
+        <input
+          defaultValue={quantity}
+          placeholder="quantity"
+          {...register("quantity")}
+        />
+        <input type="submit" />
+      </form>
+    </div>
+  );
+};
 
-      <Modal show={show} onHide={handleClose} animation={false}>
-        <Modal.Header closeButton>
-          <Modal.Title>Editar</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Desea modificar datos</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Cerrar
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Guardar
-          </Button>
-        </Modal.Footer>
-      </Modal>
-     
-  </div>
-  )
-}
-
-export default EditArticle
+export default EditArticle;

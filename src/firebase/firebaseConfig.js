@@ -5,6 +5,7 @@ import { GoogleAuthProvider } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 
+// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyA5HKFn6zFJe_p_kpE6T37uYXfktqHKFnM",
   authDomain: "project-dish.firebaseapp.com",
@@ -13,6 +14,8 @@ const firebaseConfig = {
   messagingSenderId: "154168601130",
   appId: "1:154168601130:web:f569c8fe1ad8fb1baf3153"
 };
+
+
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

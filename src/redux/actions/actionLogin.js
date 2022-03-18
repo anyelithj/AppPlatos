@@ -1,4 +1,4 @@
-import { getAuth, signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import { google } from "../../firebase/firebaseConfig";
 import { types } from "../types/types";
 
@@ -19,7 +19,27 @@ export const loginEmailPassword = (email, password) => {
     }
 }
 
+export const actionLogout = () => {
+    return (dispatch) => {
+     const auth = getAuth();
+     signOut(auth)
+     .then(resp => {
+         console.log(resp)
+     })
+     .catch(e => {
+         console.log(e)
+     })
+     dispatch(actionLogoutSync)
+    }
+    
+ }
 
+ export const actionLogoutSync = () => {
+    return {
+        type: types.logout
+    }
+    
+}
 export const loginGoogle = () => {
     
     return (dispatch) => {

@@ -23,7 +23,7 @@ const articleReducers = (state = initialState, action) => {
             }
         case typesArticle.delete:
             return{
-                 ...state
+                article: state.article.filter(art => art.name !== action.payload)
            }
               
         default: 

@@ -1,11 +1,11 @@
 import { Navigate, Route, Routes } from "react-router-dom"
-import AgregarProducto from "../Components/crud/AgregarProducto"
+import ListArticles from "../components/ListArticles"
 
 export const DashboardRoutes = () => {
     return (
         <>
          <Routes>
-            <Route path="/" element={<AgregarProducto  />} />
+            <Route path="/listArticle" element={<ListArticles/>}/>     
             <Route path='*' element={<Navigate to="/"/>}/>
          </Routes>
         </>
